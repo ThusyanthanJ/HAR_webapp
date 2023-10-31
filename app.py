@@ -118,6 +118,7 @@ vid = ['sample']
 
 
 
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'video' not in request.files:
@@ -128,6 +129,7 @@ def upload():
         flash('No video file selected', 'error')
         return redirect(url_for('index'))
     if video and allowed_file(video.filename):
+        sample_name = video.filename
         video.filename = "Input_Videos.mp4"
         video.save('static/Input_Videos/' + video.filename)
         test_video_directory = 'static/Output_Videos'
@@ -138,11 +140,12 @@ def upload():
         input_video_file_path = f'{test_video_directory}/{video_title}.mp4'
         # store the video name in the session
         session['video_name'] = vid[0]
+        session['sample_name'] = sample_name
         video_name = vid[0]
         # construct the output video path
         output_video_file_path = f'{test_video_directory1}/{video_title}=Output.SeqLen{SEQUENCE_LENGTH}.mp4'
         # Implement PRG pattern
-        return redirect(url_for('index'))
+        return redirect(url_for('index',video_name=video_name))
     return 'invalid file type'
 
 
