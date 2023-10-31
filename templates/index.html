@@ -8,7 +8,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to bottom, #f8f9fa, #ced4da);
+            background: linear-gradient(to bottom, #5e5f60, #ced4da);
             height: 100vh;
             display: flex;
             align-items: center;
@@ -17,7 +17,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 50%;
             background: #ffffff;
             padding: 30px;
             border-radius: 10px;
@@ -70,7 +70,7 @@
         }
 
         .btn-primary {
-            width: 100%;
+            width: 35%;
             margin-top: 20px;
         }
         .custom-file-upload {
@@ -90,6 +90,13 @@
     background-color: #dee2e6;
     color: #495057;
 }
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px; /* Added border radius to match container */
+}
+
 
     </style>
 </head>
@@ -97,14 +104,18 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Upload and Predict Video</h1>
         <form action="{{url_for('upload')}}" method="post" enctype="multipart/form-data" class="w-100" id="uploadForm">
-            <div class="form-group">
+            <div class="form-group d-flex justify-content-center align-items-center flex-column"" >
                 <label for="video">Select Video (MP4 only):</label>
-                <input type="file" class="custom-file-upload" id="video" name="video" accept=".mp4">
+                <input type="file" class="custom-file-upload" id="video" name="video" accept=".mp4" >
+            
+                <button type="submit" id="videoUploadBtn" class="btn btn-primary" >Upload</button>
             </div>
-            <button type="submit" id="videoUploadBtn" class="btn btn-primary">Upload</button>
+            <!-- <button type="submit" id="videoUploadBtn" class="btn btn-primary">Upload</button> -->
         </form>
-        <form action="{{url_for('predict')}}" method="get" enctype="multipart/form-data" onsubmit="showLoader()" class="w-100 hidden" id="predictForm">
-            <button type="submit" id="predictBtn" class="btn btn-success mt-3" style="width: 100%;">Predict</button>
+        <form action="{{url_for('predict')}}" method="get" enctype="multipart/form-data" onsubmit="showLoader()" class="w-100" id="predictForm">
+            <div class="form-group d-flex justify-content-center align-items-center flex-column"" >
+                <button type="submit" id="predictBtn" class="btn btn-success mt-3" style="width: 50%;">Predict</button>
+            </div>
         </form>
         <div id="loader" class="hidden">
             <div class="loader-container">
@@ -112,19 +123,27 @@
                 <p id="predictingText" class="hidden">Predicting...</p>
             </div>
         </div>
+        
         {% if video_name %}
         <div class="mt-3">
             <p class="mb-2">Uploaded Video:</p>
-            <video width="100%" controls>
+            <video id="uploadedVideo" width="100%" controls>
                 <source src="{{url_for('static', filename='Input_Videos/' + video_name)}}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <script>
-            document.getElementById('uploadForm').style.display = 'none';
-            document.getElementById('predictForm').classList.remove('hidden');
+            document.getElementById('video').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                const video = document.getElementById('uploadedVideo');
+                video.src = ''; // Clear the video source
+                const url = URL.createObjectURL(file);
+                video.src = url;
+                video.style.display = 'block';
+            });
         </script>
         {% endif %}
+
     </div>
 
     <!-- Linking Bootstrap JS and Popper.js for dropdowns and other features -->
@@ -132,10 +151,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+
         function showLoader() {
             document.getElementById('predictBtn').style.display = 'none';
+            document.getElementById('video').disabled = true;
+            document.getElementById('videoUploadBtn').disabled = true; // disabling the upload button
             document.getElementById('loader').classList.remove('hidden');
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('predictingText').classList.remove('hidden');
                 document.getElementById('predictingText').classList.add('fade-in');
             }, 500);
@@ -144,8 +166,4 @@
     </script>
 </body>
 </html>
-
-
-
-
 
