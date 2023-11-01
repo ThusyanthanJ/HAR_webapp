@@ -3,17 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Preview App</title> <!-- Updated title -->
+    <title>About</title>
     <!-- Linking Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-/* 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            margin: 0;
-        } */
         body {
         font-family: 'Share Tech', sans-serif;
         font-size: 18px;
@@ -22,47 +15,44 @@
         justify-content: center;
         align-items: center;
         margin: 0;
-        margin-bottom: 40vw;
         /* width: 100vw; */
-        /* height: 100vh; */
+        /* height: 100vw; */
+        margin-bottom: 20vw;
         text-shadow: 8px 8px 10px #0000008c;
         background-color: #343a40;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), linear-gradient(to right top, #343a40, #2b2c31, #211f22, #151314, #000000);
     }
-        .video-container {
-            width: 40%;
+        .container {
+            /* max-width: 98%; */
             background: #ffffff00;
-            padding-top: 10px;
-            border-radius: 10px;
+            /* padding: 30px; */
+            /* border-radius: 10px; */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+        .mt-5 {
+        margin-top: 2rem; /* You can adjust this value to increase or decrease the margin top */
+    }
 
-        @keyframes fadeInAnimation {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+    .mt-5 h2 {
+        font-size: 2.5rem; /* You can adjust this value to change the font size of the heading */
+        color: #ffffff; /* You can change the color of the heading text */
+        text-align: center; /* You can change the alignment of the heading text */
+        margin-bottom: 1.5rem; /* You can adjust this value to change the margin bottom of the heading */
+    }
 
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 10px; 
-        }
-        h1 {
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+    .mt-5 p {
+        font-size: 1.2rem; /* You can adjust this value to change the font size of the paragraph */
+        text-align: justify; /* You can change the alignment of the paragraph text */
+        margin-bottom: 1.5rem; /* You can adjust this value to change the margin bottom of the paragraph */
+        line-height: 1.6; /* You can adjust this value to change the line height of the paragraph */
+    }
     </style>
 </head>
 <body>
-    <div class="video-container">
+    <div class="container mt-5">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width: 130%;">
             <a class="navbar-brand" href="#">Video Preview App</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,38 +72,29 @@
                 </ul>
             </div>
         </nav>
-        <h1>Predicted Video</h1>
-        <video width="100%" controls >
-            <source src="{{url_for('static', filename='Output_Videos/processed_output.mp4')}}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div>
-            <!-- Download Button -->
-            <a href="{{url_for('static', filename='Output_Videos/processed_output.mp4')}}" download="processed_output.mp4">
-                <button class="btn btn-primary mt-3">Download Video</button>
-            </a>
-
-            <button onclick="goBack()" class="btn btn-secondary mt-3">Back</button>
-        </div>
+        <div class="mt-5" style="background-color: #676666a8; padding: 5%; border-radius: 1%;">
+            <h2>About</h2>
+            <p>
+                This web application allows users to upload their videos captured in low light conditions. The application utilizes advanced technology to recognize human actions within the uploaded videos, providing users with valuable insights into the content of their videos.
+            </p>
+            <p>
+                Our goal is to provide users with a seamless experience in uploading their videos and obtaining accurate predictions about human actions, regardless of the lighting conditions. We aim to deliver reliable results and valuable information to our users, enabling them to make informed decisions based on the content of their videos.
+            </p>
+            <p>
+                Our dedicated team has meticulously designed this platform to offer users a seamless experience in uploading their videos and obtaining precise predictions regarding human actions, irrespective of the lighting conditions. Our commitment is to provide dependable results and valuable information, empowering users to make informed decisions based on the content of their videos.
+            </p>
         
+            <p>
+                The application was developed by:
+            </p>
+            <ul>
+                <li>Tharoosha Vihidun</li>
+                <li>Thusyanthan</li>
+                <li>Umayanga</li>
+            </ul>
+        </div>
     </div>
-    <script>
-        // Function to go back one step in the browser history and clear the session
-        function goBack() {
-            window.history.back();
-            // Clear the session
-            fetch('/clear_session')
-            .then(function(response) {
-                return response.text();
-            })
-            .then(function(data) {
-                console.log(data);
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+
     <!-- Linking Bootstrap JS and Popper.js for dropdowns and other features -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
